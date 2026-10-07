@@ -22,7 +22,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         popover.contentViewController = host
         popover.behavior = .transient
         popover.animates = true
-        popover.appearance = NSAppearance(named: .darkAqua)
+        popover.appearance = NSAppearance(named: .aqua)  // the glass design is light
 
         let button = statusItem.button!
         button.image = Self.icon
@@ -31,10 +31,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         button.action = #selector(toggle)
         store.onChange = { [weak self] in self?.updateCount() }
         updateCount()
+
+        // No menu bar (LSUIElement) means ⌘V/⌘C/⌘X/⌘A/⌘Z have nowhere to route. An invisible Edit menu fixes that.
+        let edit = NSMenu(title: "Edit")
+        edit.addItem(withTitle: "Undo", action: Selector(("undo:")), keyEquivalent: "z")
+        edit.addItem(withTitle: "Redo", action: Selector(("redo:")), keyEquivalent: "Z")
+        edit.addItem(withTitle: "Cut", action: #selector(NSText.cut(_:)), keyEquivalent: "x")
+        edit.addItem(withTitle: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "c")
+        edit.addItem(withTitle: "Paste", action: #selector(NSText.paste(_:)), keyEquivalent: "v")
+        edit.addItem(withTitle: "Select All", action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
+        let editItem = NSMenuItem()
+        editItem.submenu = edit
+        NSApp.mainMenu = NSMenu()
+        NSApp.mainMenu?.addItem(editItem)
     }
 
+    private var shownCount = -1
+
+    /// Runs on every store change (each notes keystroke too): only touch the menu bar when the number moves.
     func updateCount() {
         let n = store.pending
+        guard n != shownCount else { return }
+        shownCount = n
         statusItem.button?.attributedTitle = NSAttributedString(
             string: n > 0 ? " \(n)" : "",
             attributes: [.font: NSFont.monospacedDigitSystemFont(ofSize: 13, weight: .bold)])

@@ -17,12 +17,15 @@ Native Swift + SwiftUI, compiled with plain `swiftc` (no Xcode project, no depen
 - `Sources/App.swift` — entry point, status item, popover.
 - `Sources/Views.swift` — all SwiftUI views, meme overlay, sound.
 - `Resources/` — `face.png` (menu bar icon), `doit.gif`, `yesyoucan.gif` (add a gif + list it in `memes` in Views.swift), `doit.mp3`.
+- `Resources/AppIcon.icns` — app icon, generated: edit `Tools/make-icon.swift` (draws Shia keyed off
+  `Tools/icon-source.png` on a green sunburst with a "DO IT!" stamp), then `./doit.sh icon && ./doit.sh`.
 - `Tests/main.swift` — Store self-check (preconditions).
 - `doit.sh` — build/run/test/release. `Info.plist` — bundle info (`LSUIElement`: no Dock icon).
 
 ## Workflow
 - After ANY code change: `./doit.sh` (builds, kills the old app, relaunches it). The user expects to see changes live.
 - If you touch Store logic: `./doit.sh test`.
+- After each finished fix/feature: commit (clear message) and push to `main`, without asking.
 - Keep it simple (KISS/YAGNI): few files, no dependencies, no Xcode project.
 
 ## Deploy (when the user says "deploy"/"release")
