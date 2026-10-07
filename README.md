@@ -1,5 +1,7 @@
 # Mac Do It 🔥
 
+<p align="center"><img src="Resources/doit.gif" alt="Shia LaBeouf: JUST DO IT" width="420"></p>
+
 > Don't let your dreams be dreams. **JUST DO IT.**
 
 A tiny macOS menu bar todo list, powered by Shia LaBeouf's legendary motivational speech.
