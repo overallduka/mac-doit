@@ -12,6 +12,10 @@ A tiny macOS menu bar todo list, powered by Shia LaBeouf's legendary motivationa
 - Tasks you didn't finish yesterday stay at the bottom with a 🔥 counter of how many days you've been ignoring them.
 - Resizable popover; everything autosaves.
 
+## How it works
+
+<p align="center"><img src="docs/demo.gif" alt="Open Mac Do It, add a task, check it off, delete one" width="460"></p>
+
 ## Install
 
 1. Download `MacDoIt.zip` from [Releases](../../releases/latest) and unzip.
