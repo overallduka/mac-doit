@@ -8,7 +8,8 @@ Native Swift + SwiftUI, compiled with plain `swiftc` (no Xcode project, no depen
 - Click → popover: add tasks (title), check/uncheck, delete on hover, click a task to expand its notes (editable).
 - Today's tasks on top (done ones sink). Unfinished tasks from earlier days below under
   "YESTERDAY YOU SAID TOMORROW" with a 🔥 age badge (`Nd`) that gets redder with age.
-- Checking a task → random meme GIF overlay + emoji burst + "do it" sound.
+- Checking a task → random meme GIF overlay + emoji burst + "do it" sound. Adding one → the "Just… do it." part.
+- Footer speaker button mutes every sound (all go through `Sound.play`); saved in UserDefaults (`muted`, default off).
 - Popover is resizable (grip bottom-right); size saved in UserDefaults (`width`/`height`).
 - Every change auto-saves to `~/Library/Application Support/MacDoIt/todos.json` (ISO dates, pretty JSON).
 

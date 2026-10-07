@@ -13,6 +13,7 @@ struct ContentView: View {
     @Bindable var store: Store
     @AppStorage("width") private var width = 380.0
     @AppStorage("height") private var height = 580.0
+    @AppStorage(Sound.mutedKey) private var muted = false
     @State private var draft = ""
     @State private var expanded: UUID?
     @State private var meme: String?
@@ -167,6 +168,15 @@ struct ContentView: View {
             Text(pending == 0 ? "All done · You did it. 🏆" : "\(pending) left · Just do it.")
                 .contentTransition(.numericText())
             Spacer()
+            Button {
+                muted.toggle()
+                if muted { Sound.stop() }
+            } label: {
+                Image(systemName: muted ? "speaker.slash" : "speaker.wave.2")
+                    .contentTransition(.symbolEffect(.replace))
+                    .frame(width: 18)
+            }
+            .buttonStyle(.icon).help(muted ? "Sound is off" : "Sound is on")
             Button { NSApp.terminate(nil) } label: { Image(systemName: "power") }
                 .buttonStyle(.icon).help("Quit Mac Do It")
             ResizeGrip(width: $width, height: $height)
@@ -182,7 +192,7 @@ struct ContentView: View {
             onExpand: { expanded = expanded == todo.id ? nil : todo.id },
             notes: Binding(get: { todo.notes }, set: { v in store.update(todo.id) { $0.notes = v } }),
             onToggle: { toggle(todo.id) },
-            onDelete: { NSSound(named: "Pop")?.play(); withAnimation(listSpring) { store.delete(todo.id) } })
+            onDelete: { Sound.play("Pop"); withAnimation(listSpring) { store.delete(todo.id) } })
         .equatable()
     }
 
@@ -502,13 +512,20 @@ struct GIFView: NSViewRepresentable {
     func updateNSView(_ view: NSImageView, context: Context) {}
 }
 
+/// Every sound goes through here, so the footer's mute switch silences all of them.
 enum Sound {
+    static let mutedKey = "muted"
     private static var current: NSSound?
 
+    /// A bundled mp3 by name, or a system sound (e.g. "Pop") when there's no such mp3.
     static func play(_ name: String, from start: TimeInterval = 0) {
+        guard !UserDefaults.standard.bool(forKey: mutedKey) else { return }
+        guard let url = Bundle.main.url(forResource: name, withExtension: "mp3") else { NSSound(named: name)?.play(); return }
         current?.stop()
-        current = Bundle.main.url(forResource: name, withExtension: "mp3").flatMap { NSSound(contentsOf: $0, byReference: true) }
+        current = NSSound(contentsOf: url, byReference: true)
         current?.currentTime = start
         current?.play()
     }
+
+    static func stop() { current?.stop() }
 }

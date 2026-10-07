@@ -13,7 +13,7 @@ A tiny macOS menu bar todo list, powered by Shia LaBeouf's legendary motivationa
 - Click him: add tasks, check them off, click a task for notes.
 - Every finished task gets you a **JUST DO IT** meme and sound.
 - Tasks you didn't finish yesterday stay at the bottom with a 🔥 counter of how many days you've been ignoring them.
-- Resizable popover; everything autosaves.
+- Resizable popover; everything autosaves. Speaker button in the footer to mute Shia.
 
 ## Install
 
