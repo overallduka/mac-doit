@@ -1,6 +1,9 @@
 # Mac Do It 🔥
 
-<p align="center"><img src="Resources/doit.gif" alt="Shia LaBeouf: JUST DO IT" width="420"></p>
+<p align="center">
+  <img src="Resources/doit.gif" alt="Shia LaBeouf: JUST DO IT" width="400" align="top">
+  <img src="docs/demo.gif" alt="Open Mac Do It, add a task, check it off, delete one" width="360" align="top">
+</p>
 
 > Don't let your dreams be dreams. **JUST DO IT.**
 
@@ -11,10 +14,6 @@ A tiny macOS menu bar todo list, powered by Shia LaBeouf's legendary motivationa
 - Every finished task gets you a **JUST DO IT** meme and sound.
 - Tasks you didn't finish yesterday stay at the bottom with a 🔥 counter of how many days you've been ignoring them.
 - Resizable popover; everything autosaves.
-
-## How it works
-
-<p align="center"><img src="docs/demo.gif" alt="Open Mac Do It, add a task, check it off, delete one" width="460"></p>
 
 ## Install
 
