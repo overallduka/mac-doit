@@ -6,8 +6,8 @@ let cal = Calendar.current
 let s = Store(url: url)
 let ago = { (d: Int) in cal.date(byAdding: .day, value: -d, to: s.now)! }
 
-s.add("today")
-s.add("   ")  // ignored
+precondition(s.add("today"))
+precondition(!s.add("   "), "blank ignored")
 s.todos.append(Todo(title: "old", created: ago(3)))
 s.todos.append(Todo(title: "older", created: ago(5)))
 s.todos.append(Todo(title: "done yesterday", created: ago(2), doneAt: ago(1)))

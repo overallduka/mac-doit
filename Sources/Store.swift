@@ -61,9 +61,13 @@ final class Store {
 
     // MARK: Actions
 
-    func add(_ title: String) {
+    /// Returns true when a task was added (blank titles are ignored).
+    @discardableResult
+    func add(_ title: String) -> Bool {
         let title = title.trimmingCharacters(in: .whitespacesAndNewlines)
-        if !title.isEmpty { todos.insert(Todo(title: title, created: now), at: 0) }
+        if title.isEmpty { return false }
+        todos.insert(Todo(title: title, created: now), at: 0)
+        return true
     }
 
     /// Returns true when the task just became done (time to DO IT).

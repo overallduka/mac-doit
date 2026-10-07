@@ -191,7 +191,7 @@ struct ContentView: View {
     private let listSpring = Animation.spring(response: 0.45, dampingFraction: 0.78)
 
     private func add() {
-        withAnimation(listSpring) { store.add(draft) }
+        if withAnimation(listSpring, { store.add(draft) }) { Sound.play("doit", from: 2.8) }  // just the "Just… do it." part
         draft = ""
     }
 
@@ -505,9 +505,10 @@ struct GIFView: NSViewRepresentable {
 enum Sound {
     private static var current: NSSound?
 
-    static func play(_ name: String) {
+    static func play(_ name: String, from start: TimeInterval = 0) {
         current?.stop()
         current = Bundle.main.url(forResource: name, withExtension: "mp3").flatMap { NSSound(contentsOf: $0, byReference: true) }
+        current?.currentTime = start
         current?.play()
     }
 }
